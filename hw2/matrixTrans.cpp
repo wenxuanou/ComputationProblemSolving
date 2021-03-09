@@ -1,4 +1,5 @@
 #include<iostream>
+#include<stdio.h>
 #include<cmath>
 #include<time.h>
 
@@ -12,35 +13,36 @@ double* transpose(double mat[], int dim, int rank);
 
 void print2D(double mat[], int dim);
 void printMat(double mat[], int dim, int rank);
+void printStraight(double mat[], int dim, int rank);
 
 int main(){
 	cout << "run" << endl;
 
-	int dim = 4, rank = 2; // rank >= 2
+	int dim = 2, rank = 3; // rank >= 2
 	
 	// initialize matrix
 	double* mat = genMatrix(dim, rank);
 
-	double* matTrans = transpose2(mat,dim);
+	//double* matTrans = transpose2(mat,dim);
 	double* matTrans2 = transpose(mat, dim, rank);
 
 	
 	cout << "matrix:" << endl;
-	print2D(mat, dim);
-	cout << endl;
+	//printMat(mat, dim, rank);
+	printStraight(mat, dim, rank);
 	
+
+	/*	
 	cout << "transpose:" << endl;
         print2D(matTrans, dim);	
-	
-	cout << "new transpose:" << endl;
-	print2D(matTrans2, dim);	
-	
-	
-	/*
-	for(int id = 0; id < pow(dim,rank); id++){
-		cout << mat[id] << " " << matTrans2[id] << endl;
-	}
 	*/
+
+	cout << "new transpose:" << endl;
+	//printMat(matTrans2, dim, rank);	
+	printStraight(matTrans2, dim, rank);
+
+
+
 
 	return 0;
 }
@@ -51,7 +53,8 @@ double* genMatrix(int dim, int rank){
 	double* matrix = new double[matSize];
 	srand (time(NULL));
 	for(int id = 0; id < matSize; id++){
-		matrix[id] = rand() % 10; 
+		//matrix[id] = rand() % 10; 
+		matrix[id] = id + 1;
 	}
 
 	return matrix;
@@ -78,30 +81,21 @@ double* transpose(double mat[], int dim, int rank){
 	double* out = new double[matSize];	
 
 	for(int id = 0; id < matSize; id++){
-		int rankCount = rank;
 		int newId = 0;
-
-		int temp = id % (int)pow(dim, rankCount);
-		while(rankCount > 0){
-			rankCount--;
+		int temp = id;
+		for(int countR = 1; countR <= rank; countR++){
+			newId += temp / (int)pow(dim, rank - countR) * pow(dim, countR - 1); 
 			
-			newId += temp / pow(dim, rankCount) * pow(dim, rank - rankCount - 1);
-
-			//cout << newId << " ";
+			//cout << temp / (int)pow(dim, rank - countR) << " ";
 			
-			temp = temp % (int)pow(dim, rankCount);
+			temp = temp % (int)pow(dim, rank - countR);
 		}
-
 		//cout << endl;
-		//cout << "id: " << id << " new id: " << newId << endl;
-
-		/*
-		double tempVal = mat[id];
-		mat[id] = mat[newId];
-		mat[newId] = tempVal;
-		*/
 
 		out[newId] = mat[id];
+
+		//cout << "id: " << id << " newId: "<< newId << endl;
+
 	}
 	
 	return out;
@@ -120,13 +114,32 @@ void print2D(double mat[], int dim){
 }
 
 void printMat(double mat[], int dim, int rank){
-	/*
+	
 	int matSize = pow(dim,rank);
 
 	for(int id = 0; id < matSize; id++){
-		
+		for(int count = 1; count < rank; count++){
+			if(id % (int)pow(dim,count) == 0){
+				cout << endl;
+			}else{
+				continue;
+			}
+		}
+		cout << mat[id] << " ";
 	}
-	*/
+	
+
+	return;
+}
+
+void printStraight(double mat[], int dim, int rank){
+
+	int matSize = pow(dim,rank);
+
+	for(int id = 0; id < matSize; id++){
+		cout << mat[id] << " ";
+	}
+	cout << endl;
 
 	return;
 }

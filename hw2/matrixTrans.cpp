@@ -4,6 +4,11 @@
 #include<cmath>
 #include<time.h>
 
+#include<omp.h>
+
+#define NUM_THREADS 4
+
+
 using namespace std;
 
 unsigned char* genMatrix(int dim, int rank);
@@ -22,7 +27,7 @@ int main(){
 	// set up timing
 	struct timeval start, end;
 
-	int dim = 2, rank = 23; // rank >= 2	
+	int dim = 2, rank = 23; // rank >= 2, tensor size: 2^23	
 	// initialize matrix
 	unsigned char* mat = genMatrix(dim, rank);
 
@@ -73,25 +78,18 @@ unsigned char* transpose(unsigned char mat[], int dim, int rank){
 	// all tensor are stored as 1D vector, square tensor
 	const int matSize = pow(dim,rank);
 	unsigned char* out = new unsigned char[matSize];	
-
-	for(int id = 0; id < matSize; id++){
+	
+	#pragma omp parallel for num_threads(NUM_THREADS)	
+	for(int id = 0; id < matSize; id ++){
 		int newId = 0;
 		int temp = id;
 		for(int countR = 1; countR <= rank; countR++){
-			newId += temp / (int)pow(dim, rank - countR) * pow(dim, countR - 1); 
-			
-			//cout << temp / (int)pow(dim, rank - countR) << " ";
-			
+			newId += temp / (int)pow(dim, rank - countR) * pow(dim, countR - 1); 	
 			temp = temp % (int)pow(dim, rank - countR);
 		}
-		//cout << endl;
-
-		out[newId] = mat[id];
-
-		//cout << "id: " << id << " newId: "<< newId << endl;
-
+			
+		out[newId] = mat[id];	
 	}
-	
 	return out;
 }
 

@@ -4,11 +4,11 @@ CC = icpc
 # compiler flags
 CFLAGS = -Wall
 
-# include path
-INC = /usr/include/mkl
+# compiler flag
+COMP =  -I"${MKLROOT}/include"
 
-# library path
-LIB = /usr/lib/x86_64-linux-gnu
+# link
+LIB = -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
 
 # build target
 TARGET = denseMatTransMKL
@@ -17,7 +17,7 @@ TARGET = denseMatTransMKL
 all: $(TARGET)
 
 $(TARGET):$(TARGET).cpp
-	$(CC) $(LIB) $(INC) -o $(TARGET) $(TARGET).cpp
+	$(CC) $(LIB) $(COMP) $(TARGET).cpp
 
 
 clean:

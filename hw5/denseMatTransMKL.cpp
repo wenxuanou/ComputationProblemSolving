@@ -1,4 +1,5 @@
 #include<cstdio>
+#include<CL/sycl.hpp>
 #include"oneapi/mkl.hpp"
 #include<sys/time.h>
 

@@ -6,23 +6,9 @@
 
 using namespace std;
 
-void getMat(vector<double> &V, vector<int> &row_index, vector<int> &col_index,
-		int size, int numElem){
+void getMat(vector<double> &V, vector<int> &row_index, vector<int> &col_index){
+	// read from npz file
 
-	double num;
-	int currentElem = 0;
-	row_index.push_back(currentRow);
-	for(int i = 0; i < numElem; i++){
-		V.push_back(num);
-
-		col_index.push_back(rand() % size);
-		
-		// row_index counts number of elements in each row
-		if(i < numElem - 1){
-			currentRow += ;
-			row_index.push_back(currentRow);
-		}
-	}
 
 }
 
@@ -48,8 +34,6 @@ int main(){
 
 	srand(time(NULL));
 
-	int size = 5;
-	int numElem = 10;
 	vector<double> V, VT;
 	vector<int> row_index, col_index, row_indexT, col_indexT;
 

@@ -36,7 +36,7 @@ void printMat(double *mat, size_t size){
 
 int main(){
 		
-	const size_t size = 1024;	// 2^20 total element
+	const size_t size = 4096;	// 2^20 total element
 
 	double* mat = (double*)malloc(size * size * sizeof(double));
 	double* matTrans = (double*)malloc(size * size * sizeof(double));

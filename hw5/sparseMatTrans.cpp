@@ -1,8 +1,10 @@
 #include<cstdio>
 #include<vector>
 #include<cstdlib>
-#include<time>	// for random
+#include<time.h>	// for random
 #include<sys/time.h>
+
+#include"cnpy.h"	// to read npz
 
 using namespace std;
 
@@ -13,7 +15,7 @@ void getMat(vector<double> &V, vector<int> &row_index, vector<int> &col_index){
 }
 
 
-void transpose(vector<double> &V, vector<double> &VT
+void transpose(vector<double> &V, vector<double> &VT,
 		vector<int> &row_index, vector<int> &col_index,
 		vector<int> &row_indexT, vector<int> &col_indexT){
 
@@ -37,7 +39,7 @@ int main(){
 	vector<double> V, VT;
 	vector<int> row_index, col_index, row_indexT, col_indexT;
 
-	
+	cnpy::NpyArray csrMat = cnpy::npy_load("myMatrix.npz");
 
 
 

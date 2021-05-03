@@ -20,7 +20,7 @@ TARGET3 = denseMatTrans_loopTiling
 TARGET4 = denseMatTrans_unroll
 TARGET5 = denseMatTrans_omp
 
-all: $(TARGET2) $(TARGET3)
+all: $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5)
 
 $(TARGET1):$(TARGET1).cpp
 	$(CC1) -o $(TARGET1) $(TARGET1).cpp $(LIB1) $(COMP1)
@@ -33,8 +33,12 @@ $(TARGET3):$(TARGET3).cpp
 	$(CC2) -Wall -O3 -o $(TARGET3) $(TARGET3).cpp
 
 $(TARGET4):$(TARGET4).cpp
-	 $(CC2) -O3 -o $(TARGET4) $(TARGET4).cpp
+	$(CC2) -Wall -O3 -funroll-loops -o $(TARGET4) $(TARGET4).cpp # added unrolling flag
+
+$(TARGET5):$(TARGET5).cpp
+	$(CC2) -Wall -O3 -fopenmp -funroll-loops -o $(TARGET5) $(TARGET5).cpp
+
 
 
 clean:
-	$(RM) *.o $(TARGET1) $(TARGET2)
+	$(RM) *.o $(TARGET1) $(TARGET2) $(TARGET3) $(TARGET4) $(TARGET5)

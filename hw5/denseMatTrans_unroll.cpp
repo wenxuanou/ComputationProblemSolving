@@ -19,7 +19,7 @@ void transpose(double *mat, double *matTrans, size_t size, size_t blockWidth){
 	for(size_t i = 0; i < size / blockWidth; i++){
 		for(size_t j = 0; j < size / blockWidth; j++){
 			for(size_t ii = 0; ii < blockWidth; ii++){
-                		for(size_t jj = 0; jj < blockWidth; jj++){
+				for(size_t jj = 0; jj < blockWidth; jj++){
                         		
 					matTrans[(j * blockWidth + jj) * size + (i * blockWidth + ii)] = 
 						mat[(i * blockWidth + ii) * size + (j * blockWidth + jj)];
@@ -45,7 +45,7 @@ void printMat(double *mat, size_t size){
 
 int main(){
 		
-	const size_t size = 2048;	// 2^20 total element
+	const size_t size = 4096;	// 2^20 total element
 	size_t blockWidth = size / 8;
 
 	double* mat = (double*)malloc(size * size * sizeof(double));

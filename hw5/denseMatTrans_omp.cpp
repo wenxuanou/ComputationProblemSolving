@@ -2,6 +2,8 @@
 #include<cstdlib>
 #include<sys/time.h>
 
+#include"omp.h"
+
 using namespace std;
 
 void getMat(double *mat, size_t size){
@@ -15,9 +17,14 @@ void getMat(double *mat, size_t size){
 }	
 
 void transpose(double *mat, double *matTrans, size_t size){
+	
+	int id1, id2;
+	#pragma omp parallel for collapse(2) private(id1, id2)
 	for(size_t i = 0; i < size; i++){
 		for(size_t j = 0; j < size; j++){
-			matTrans[j * size + i] = mat[i * size + j];
+			id1 = j * size + i;
+			id2 = i * size + j;
+			matTrans[id1] = mat[id2];
 		}
 	}
 

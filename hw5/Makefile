@@ -3,7 +3,7 @@ CC1 = icpc
 CC2 = g++
 
 # compiler flags
-CFLAGS = -O
+CFLAGS = -O1
 
 # compiler flag
 COMP1 =  -I"${MKLROOT}/include"
@@ -16,19 +16,24 @@ LIB2 = -L/usr/local/
 # build target
 TARGET1 = denseMatTransMKL 
 TARGET2 = sparseMatTrans
+TARGET3 = denseMatTrans_loopTiling
+TARGET4 = denseMatTrans_unroll
+TARGET5 = denseMatTrans_omp
 
-all: $(TARGET2)
+all: $(TARGET2) $(TARGET3)
 
 $(TARGET1):$(TARGET1).cpp
 	$(CC1) -o $(TARGET1) $(TARGET1).cpp $(LIB1) $(COMP1)
 
 
 $(TARGET2):$(TARGET2).cpp
-	$(CC1) $(CFLAGS) -o $(TARGET2) $(TARGET2).cpp $(LIB2) $(COMP2) --std=c++11
+	$(CC2) $(CFLAGS) -o $(TARGET2) $(TARGET2).cpp $(LIB2) $(COMP2) --std=c++11
 
+$(TARGET3):$(TARGET3).cpp
+	$(CC2) -Wall -O3 -o $(TARGET3) $(TARGET3).cpp
 
-
-
+$(TARGET4):$(TARGET4).cpp
+	 $(CC2) -O3 -o $(TARGET4) $(TARGET4).cpp
 
 
 clean:

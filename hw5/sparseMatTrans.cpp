@@ -77,7 +77,7 @@ int main(){
 	vector<double> V, VT;
 	vector<int> row_index, col_index, row_indexT, col_indexT;
 
-	int size = 2048;
+	int size = 4096;
 
 	string fname = "myMatrix.txt";
 

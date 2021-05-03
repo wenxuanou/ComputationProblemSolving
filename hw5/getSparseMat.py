@@ -3,7 +3,7 @@ from scipy import sparse
 import random
 
 
-length = 2048  # square matrix length*length
+length = 4096  # square matrix length*length
 numElem = int(length / 4)
 
 

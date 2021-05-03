@@ -1,26 +1,30 @@
 # compiler
-#CC = icpc
-CC = g++
+CC1 = icpc
+CC2 = g++
 
 # compiler flags
-CFLAGS = -Wall
+CFLAGS = -O
 
 # compiler flag
-#COMP =  -I"${MKLROOT}/include"
-COMP = -I/usr/local/include -lcnpy -lz
+COMP1 =  -I"${MKLROOT}/include"
+COMP2 = -I/usr/local/ -lcnpy -lz
 
 # link
-#LIB = -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
-LIB = -L/usr/local/lib/
+LIB1 = -L${MKLROOT}/lib/intel64 -lmkl_intel_lp64 -lmkl_sequential -lmkl_core -lpthread -lm -ldl
+LIB2 = -L/usr/local/
 
 # build target
-#TARGET = denseMatTransMKL 
-TARGET = sparseMatTrans
+TARGET1 = denseMatTransMKL 
+TARGET2 = sparseMatTrans
 
-all: $(TARGET)
+all: $(TARGET2)
 
-$(TARGET):$(TARGET).cpp
-	$(CC) -o $(TARGET) $(TARGET).cpp $(LIB) $(COMP) --std=c++11
+$(TARGET1):$(TARGET1).cpp
+	$(CC1) -o $(TARGET1) $(TARGET1).cpp $(LIB1) $(COMP1)
+
+
+$(TARGET2):$(TARGET2).cpp
+	$(CC1) $(CFLAGS) -o $(TARGET2) $(TARGET2).cpp $(LIB2) $(COMP2) --std=c++11
 
 
 
@@ -28,4 +32,4 @@ $(TARGET):$(TARGET).cpp
 
 
 clean:
-	$(RM) *.o $(TARGET)
+	$(RM) *.o $(TARGET1) $(TARGET2)
